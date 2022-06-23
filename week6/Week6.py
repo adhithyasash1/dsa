@@ -259,4 +259,194 @@ for ed in edges:
     WL[ed[1]].append((ed[0],ed[2]))
 print(connectSites(WL, exCamp))
 
+'''
+Write a function Type_of_heap(A) that accept a heap A and return string Max if input heap is
+max heap, Min if input heap is a min heap and None otherwise.
 
+Example :
+    Input : 
+        [1,2,3,4,5,6]
+    Output :
+        Min
+
+    Input : 
+        [5,3,4,2,1]
+    Output :
+        Max
+
+    Input : 
+        [1,5,4,7,6,3,2]
+    Output :
+        None
+'''
+
+def minheap(A):
+    for i in range((len(A) - 2) // 2 + 1):
+        if A[i] > A[2*i + 1] or (2*i + 2 != len(A) and A[i] > A[2*i + 2]):
+            return False
+    return True
+
+def maxheap(A):
+    for i in range((len(A) - 2) // 2 + 1):
+        if A[i] < A[2*i + 1] or (2*i + 2 != len(A) and A[i] < A[2*i + 2]):
+            return False
+    return True
+    
+def type_of_heap(A):
+    if minheap(A)==True:
+        return 'Min'
+    if maxheap(A)==True:
+        return 'Max'
+    return 'None'
+
+# Suffix
+
+A=eval(input())
+print(type_of_heap(A))
+
+'''
+Write a function findRedundantEdges(E,n) that accept an edge list E in increasing order of the
+edge weight and the number of vertices n (labeled from 0 to n-1) in a connected undirected
+graph and the function returns a list of redundant edges in increasing order of weight, so by
+removing these edges, the graph should remain connected with the minimum total cost of
+edges(minimum cost spanning tree).
+
+Note - All edge weights are distinct.
+
+Hint- Union-find data structure  
+
+Example : 
+    Input : 
+        4
+        [(0,1,10),(1,2,20),(2,3,30),(3,0,40),(1,3,50)]
+    Output : 
+         [(3, 0, 40), (1, 3, 50)]
+
+'''
+
+class MakeUnionFind:
+    def __init__(self):
+        self.components = {}
+        self.members = {}
+        self.size = {}
+    
+    def make_union_find(self,vertices):
+        for vertex in range(vertices):
+            self.components[vertex] = vertex
+            self.members[vertex] = [vertex]
+            self.size[vertex] = 1
+    
+    def find(self,vertex):
+        return self.components[vertex]
+    
+    def union(self,u,v):
+        c_old = self.components[u]
+        c_new = self.components[v]
+        # Always add member in components which have greater size
+        if self.size[c_new] >= self.size[c_old]:
+            for x in self.members[c_old]:
+                self.components[x] = c_new
+                self.members[c_new].append(x)
+                self.size[c_new] += 1
+        else:
+            for x in self.members[c_new]:
+                self.components[x] = c_old
+                self.members[c_old].append(x)
+                self.size[c_old] += 1
+
+def findRedundantEdges(E,n):
+    st = MakeUnionFind()
+    st.make_union_find(n)
+    redlist=[]
+    for edge in E:
+        if st.find(edge[0])!=st.find(edge[1]):
+            st.union(edge[0], edge[1])
+        else:
+            redlist.append(edge)
+    return redlist
+
+# Suffix 
+
+n = int(input())
+E=eval(input())
+print(findRedundantEdges(E,n))
+
+'''
+Write a function find_kth_largest(root, k) that accept root as a reference of root node of
+BST of n elements and an integer k, where 0 < k <= n . The function should return the kth
+largest element without doing any modification in Binary Search Tree. The complexity of the
+solution should be in order of O(logn + k)
+
+class Tree:
+    def __init__(self,initval=None):
+        self.value = initval
+        if self.value:
+            self.left = Tree()
+            self.right = Tree()
+        else:
+        self.left = None
+        self.right = None
+    return
+
+Example :
+    Input : 
+        [5,4,6,3,2,1,7] #bst created using given sequence
+        3 #k
+    Output : 
+        5
+'''
+def kthlargest(root):
+    global count,result
+    if root.right!=None:
+        find_kth_largest(root.right,k)
+        count += 1
+        if count==k:
+            result = root.value
+            return
+        find_kth_largest(root.left,k)
+    
+count = 0
+result = -1
+    
+def find_kth_largest(root,k):
+    kthlargest(root)
+    return result
+
+# Suffix 
+
+class Tree:
+    # Constructor:
+    def __init__(self,initval=None):
+        self.value = initval
+        if self.value:
+            self.left = Tree()
+            self.right = Tree()
+        else:
+            self.left = None
+            self.right = None
+        return
+        # Only empty node has value None
+    
+    def isempty(self):
+        return (self.value == None)
+    
+    def insert(self,v):
+        if self.isempty():
+            self.value = v
+            self.left = Tree()
+            self.right = Tree()
+        if self.value == v:
+            return
+        if v < self.value:
+            self.left.insert(v)
+            return
+        if v > self.value:
+            self.right.insert(v)
+            return
+
+T = Tree()
+bst = eval(input())
+k = int(input())
+for i in bst:
+T.insert(i)
+print(find_kth_largest(T,k))
