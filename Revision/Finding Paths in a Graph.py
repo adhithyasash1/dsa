@@ -2,7 +2,6 @@
 Functions for finding paths in graphs.
 """
 
-# pylint: disable=dangerous-default-value
 def find_path(graph, start, end, path=[]):
     """
     Find a path between two nodes using recursion and backtracking.
@@ -18,7 +17,6 @@ def find_path(graph, start, end, path=[]):
             return newpath
     return None
 
-# pylint: disable=dangerous-default-value
 def find_all_path(graph, start, end, path=[]):
     """
     Find all paths between two nodes using recursion and backtracking
