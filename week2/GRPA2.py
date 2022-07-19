@@ -1,3 +1,16 @@
+'''
+Complete the python function findLargest(L) below, which accepts a list L of unique
+numbers that are sorted (ascending) and rotated n times, where n is unknown and 
+returns the largest number in list L.
+
+Rotating the list [2,4,5] one time gives us [5,2,4] likewise so on..
+
+Try to give a O(logn) solution
+
+Hint : Binary Search to know which direction to proceed with searching
+
+'''
+
 def findMax(arr, low, high):
     if (high == low):
         return arr[low]
