@@ -8,6 +8,12 @@ If K is the less than every number
 in the tree return None . 
 Each node in the tree is an object of class Tree,
 and the tree will have at least one node.
+
+Input
+	50 52 54 74 93 100 114 124 130 143
+	92
+Output
+	74
 '''
 
 class Tree:
