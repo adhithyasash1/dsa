@@ -78,3 +78,81 @@ Input
 Output
 	4.12
 '''
+
+# Solution 2
+
+import math, sys
+import numpy as np
+def distance(a,b):
+    return np.sqrt(((a[0]-b[0])**2) + ((a[1]-b[1])**2))
+
+def closest_pair(Px,Py):
+
+    if len(Px) < 4:
+        return closest_pair_burteforce(Px)
+
+    Q = Px[:len(Px)//2]
+    R = Px[len(Px)//2:]
+
+    Qx = sorted(Q,key = lambda p: p[0])
+    Qy = sorted(Q,key = lambda p: p[1])
+    Rx = sorted(R,key = lambda p: p[0])
+    Ry = sorted(R,key = lambda p: p[1])
+
+
+    dl, p1, q1 = closest_pair(Qx,Qy)
+    dr, p2, q2 = closest_pair(Rx,Ry)
+
+
+    d = min(dl,dr)
+    dc, p3, q3 = closest_split_pair(Px,Py,d)
+
+    mind = min(dl,dr,dc)
+    if mind == dl:
+      return dl, p1, q1
+    elif mind == dr:
+      return dr, p2, q2
+    else:
+      return dc, p3, q3
+
+
+def closest_pair_burteforce(Px):
+    mind = float("inf")
+    cpairs = None
+    for i in range(len(Px)):
+        for j in range(i+1,len(Px)):
+            dis = distance(Px[i],Px[j])
+            if dis < mind:
+                mind = dis
+                cpairs = (Px[i],Px[j])
+    return (mind,cpairs[0],cpairs[1])
+
+
+def closest_split_pair(Px,Py,d):
+    xbar = Px[len(Px)//2][0]
+    Sy = []
+    for point in Py:
+        if xbar - d <= point[0] <= xbar + d:
+            Sy.append(point)
+
+    best = d
+    best_pair = (Px[0][0], Px[0][1])
+
+
+    for i in range(len(Sy)):
+        for j in range(1,min(8,len(Sy)-i)):
+            if distance(Sy[i],Sy[i+j]) < best:
+                best = distance(Sy[i],Sy[i+j])
+                best_pair = (Sy[i], Sy[i+j])
+
+
+
+    return best, best_pair[0], best_pair[1]
+
+
+
+def minDistance(Points):
+    Px = sorted(Points,key = lambda p: p[0])
+    Py = sorted(Points,key = lambda p: p[1])
+    d, p, q = closest_pair(Px,Py)
+    return round(d,2)
