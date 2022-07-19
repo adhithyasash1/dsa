@@ -51,3 +51,45 @@ Output
 	5
 '''
  
+# Solution 2
+
+def overlaps(a, b):
+    aa = float(a[1][:2] + '.' + a[1][3:])
+    da = float(a[2][:2] + '.' + a[2][3:])
+    ab = float(b[1][:2] + '.' + b[1][3:])
+    db = float(b[2][:2] + '.' + b[2][3:])
+    if(ab < da and ab > aa):
+        return(True)
+    elif(aa < db and aa > da):
+        return(True)
+    elif(aa == ab or da == db):
+        return(True)
+    elif(da < db and da > ab):
+        return(True)
+    elif(db < da and db > aa):
+        return(True)
+    else:
+        return(False)
+
+def minimum_platform(schedule):
+    d = {1 : [schedule[0]]}
+    for i in range(1, len(schedule)):
+        a = False
+        for key in d.keys():
+            for j in d[key]:
+                if(not overlaps(schedule[i], j)):
+                    flag = 1
+                else:
+                    flag = 0
+                    break
+            if(flag):
+                d[key].append(schedule[i])
+                a = True
+                break
+        if(not a):
+            k = max(d.keys())+1
+            d[k] = [schedule[i]]
+
+    return(len(d.keys()))
+schedule = eval(input())           
+print(minimum_platform(schedule))
