@@ -153,6 +153,32 @@ def combinationSort(strList):
   
   return L1, strList
 
+O(logn) binary search :
+
+def binarysearch(L,v,s,e):
+    if e - s == 0:
+        return(v==L[s])
+    mid = (e + s)//2
+    if v == L[mid]:
+        return(True)
+    if v < L[mid]:
+        return(binarysearch(L,v,s,mid-1))
+    else:
+        return(binarysearch(L,v,mid+1,e))
+    
+def binarysearch(L, v):
+    s = 0
+    e = len(L)
+    m = 0
+    while s < e: 
+        m = s + (e - s) // 2
+        if L[m] < v:
+            s = m + 1
+        elif L[m] > v:
+            e = m - 1
+        else:
+            return m
+    return -1
 
 
   
