@@ -124,46 +124,75 @@ class doubly_linked_list:
             self.last.next = newnode
             self.last = newnode
 
-    def insert_at_pos(self,data,pos):
+    def insert_at_pos(self,pos,data):
         newnode = Node(data)
         c = 1
         temp = self.head
         while c < pos-1:
             temp = temp.next
             c += 1
+        
         temp1 = temp.next
         temp.next = newnode
         newnode.next = temp1
         newnode.prev = temp
         temp.next=newnode
         temp1.prev=newnode
+        
+    def delete_at_pos(self,pos):
+        c = 1
+        temp = self.head
+        while c < pos - 1:
+            c += 1
+            temp = temp.next
+        
+        arb = temp
+        temp1 = temp.next.next
+        temp.next = temp1
+        temp1.prev = arb
 
+    def delete_and_insert(self,pos,data):
+        newnode = Node(data)
+        c = 1
+        temp = self.head
+        while c < pos - 1:
+            c += 1
+            temp = temp.next
+        
+        arb = temp
+        temp1 = temp.next.next
+        temp.next = newnode
+        newnode.next = temp1
+        newnode.prev = arb
 
-def traverse(self):
-    temp = self.head
-    while temp != None:
-        if temp.next != None:
-            print(temp.data, end=',')
-        else:
-            print(temp.data)
-        temp = temp.next
+    def traverse(self):
+        temp = self.head
+        while temp != None:
+            if temp.next != None:
+                print(temp.data, end=' ')
+            else:
+                print(temp.data)
+            temp = temp.next
+    
+    def traverse_rev(self):
+        temp = self.last
+        while temp != None:
+            if temp.prev != None:
+                print(temp.data, end=' ')
+            else:
+                print(temp.data)
+            temp = temp.prev
 
-def traverse_rev(self):
-    temp = self.last
-    while temp != None:
-        if temp.prev != None:
-            print(temp.data, end=',')
-        else:
-            print(temp.data)
-        temp = temp.prev
-
-ins = eval(input())
-data = int(input())
-pos=int(input())
+ins = [0,1,2,3,4,5,6,7,8,9]
 A = doubly_linked_list()
 for i in ins:
     A.insert_end(i)
-A.insert_at_pos(data,pos)
+A.traverse()
+A.insert_at_pos(7,10)
+A.traverse()
+A.delete_and_insert(7,11)
+A.traverse()
+A.delete_at_pos(7)
 A.traverse()
 A.traverse_rev()
 
@@ -193,6 +222,16 @@ Example :
 30 #top element
 False #isempty
 '''
+
+class create_stack:
+  def __init__(self):
+    self.stack = []
+  def push(self,d):
+    self.stack += [d]
+  def pop(self):
+    t = self.stack[-1]
+    self.stack = self.stack[:-1]
+    return t
 
 class Queue:
     def __init__(self):
