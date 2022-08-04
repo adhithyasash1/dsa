@@ -6,6 +6,7 @@
 #         self.val = val
 #         self.left = left
 #         self.right = right
+
 class Solution:
     def hasPathSum(self, root: TreeNode, targetSum: int) -> bool:
         if root == None:
