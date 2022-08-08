@@ -895,6 +895,64 @@ Output
 
 
 
+'''
+Write a function findAllwords (d, p) that accept a list d of words where each word follows a CamelCase notation, and the
+function return the list of all words in list d that matches a given pattern p of all uppercase characters. Return empty list if
+pattern not matched.
+CamelCase Notation is the practice of writing compound words or phrases joined without spaces, where each word's first letter
+s capitalized. For example, PowerPoint, LibreOffice, CinemaScope, etc., are in CamelCase.
+
+Hint:- You can use Tries
+Sample Input 1
+['Hi' , 'HiTech' , 'HiTechcity', 'Techie', 'TechieDelight', 'Hello', 'Helloworld', 'HiTechLab' ]
+
+Output
+[' Helloworld' ]
+
+Sample Input 2
+['Hi' , 'HiTech', 'HiTechcity', 'Techie' , 'TechieDelight' , 'Hello' , 'Helloworld', 'HiTechLab' ]
+
+Output
+['HiTech', 'HiTechcity', 'HiTechLab' ]
+'''
+
+# A class to store a Trie node
+class TrieNode:
+    def __init__(self):
+        self.d = {}
+        self.word = []
+
+def insert(head, word):
+    if head is None:
+        head = TrieNode()
+
+    curr = head
+    for c in word:
+        if c.isupper():
+            if c not in curr.d.keys():
+                curr.d[c]= TrieNode()
+            curr = curr.d[c]
+            curr.word.append(word)
+    curr.isLeaf = True
+    return head
+
+def findAllWords(dictionary, pattern):
+    if not dictionary:
+        return []
+    head = None
+    for s in dictionary:
+        head = insert(head, s)
+    curr = head
+    for c in pattern:
+        if c not in curr.d:
+            return []
+        else:
+            curr = curr.d[c]
+    return(curr.word)
+
+d = eval(input())
+p = input()
+print(findAllWords(d, p))
 
 
 
