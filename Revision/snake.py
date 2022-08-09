@@ -23,3 +23,6 @@ elif curvature < 0:
 for i in range(len(ans)):
     curr = int(new_list[i])
     print(' '*curr + '*')
+
+    
+    
