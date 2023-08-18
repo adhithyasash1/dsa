@@ -1,5 +1,2 @@
-# Data-Structures-and-Algorithms
+BSCCS2002
 
-Course Code : BSCCS2002
-
-Programming Data Structures and Algorithms using Python
